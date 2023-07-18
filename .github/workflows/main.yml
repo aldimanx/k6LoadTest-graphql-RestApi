@@ -25,7 +25,7 @@ on:
 jobs:
   k6_load_test:
     name: k6 Load Test
-    runs-on: ["self-hosted", "test-automation"]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
