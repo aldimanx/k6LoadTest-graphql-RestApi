@@ -1,0 +1,38 @@
+name: "K6 Default Run"
+on:
+  workflow_call:
+    inputs:
+      scenario_file:
+        required: true
+        default: test.js
+        type: string
+      duration:
+        required: true
+        default: '1'
+        type: string
+      vus:
+        required: true
+        default: '1'
+        type: string
+      extra_cli_args:
+        required: false
+        default: ''
+        type: string
+    secrets:
+      extra_cli_args_secret:
+        required: false
+
+jobs:
+  k6_load_test:
+    name: k6 Load Test
+    runs-on: ["self-hosted", "test-automation"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Run local k6 test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: scripts/${{ inputs.scenario_file }}
+          flags: --duration=${{ inputs.duration }}m --vus=${{ inputs.vus }} --out influxdb=http://influxdb.k6.svc.cluster.local:8086/k6db ${{ secrets.extra_cli_args_secret }} ${{ inputs.extra_cli_args }}
