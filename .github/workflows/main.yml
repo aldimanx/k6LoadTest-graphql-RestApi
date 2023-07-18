@@ -35,4 +35,4 @@ jobs:
         uses: grafana/k6-action@v0.2.0
         with:
           filename: script/${{ inputs.scenario_file }}
-          flags: --duration=${{ inputs.duration }}m --vus=${{ inputs.vus }} --out influxdb=http://influxdb.k6.svc.cluster.local:8086/k6db ${{ secrets.extra_cli_args_secret }} ${{ inputs.extra_cli_args }}
+          flags: --duration=${{ inputs.duration }}m --vus=${{ inputs.vus }} 
