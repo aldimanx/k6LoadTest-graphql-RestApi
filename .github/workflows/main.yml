@@ -1,38 +1,34 @@
-name: "K6 Default Run"
+name: Production Load with Cognito Secret
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       scenario_file:
+        description: Scenario file inside /scripts
         required: true
         default: test.js
         type: string
       duration:
+        description: Duration (in minutes)
         required: true
         default: '1'
         type: string
       vus:
+        description: Number of virtual users
         required: true
         default: '1'
         type: string
       extra_cli_args:
+        description: Extra CLI args (non secret)
         required: false
         default: ''
         type: string
-    secrets:
-      extra_cli_args_secret:
-        required: false
 
 jobs:
-  k6_load_test:
-    name: k6 Load Test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Run local k6 test
-        uses: grafana/k6-action@v0.2.0
-        with:
-          filename: script/${{ inputs.scenario_file }}
-          flags: --duration=${{ inputs.duration }}m --vus=${{ inputs.vus }} 
+  k6-default:
+    name: K6 Run
+    uses: ./.github/workflows/test.yml
+    with:
+      scenario_file: ${{ inputs.scenario_file }}
+      duration: ${{ inputs.duration }}
+      vus: ${{ inputs.vus }}
+      extra_cli_args: ${{ inputs.extra_cli_args }}
