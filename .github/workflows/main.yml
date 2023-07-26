@@ -1,4 +1,4 @@
-name: Production Load with Cognito Secret
+name: run k6
 on:
   workflow_dispatch:
     inputs:
@@ -31,4 +31,3 @@ jobs:
       scenario_file: ${{ inputs.scenario_file }}
       duration: ${{ inputs.duration }}
       vus: ${{ inputs.vus }}
-      extra_cli_args: ${{ inputs.extra_cli_args }}
