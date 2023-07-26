@@ -1,21 +1,11 @@
-export function queryStarWarsList(){
-  let queryGql = `query Query {
-      allFilms {
-        films {
-          title
-          director
-          releaseDate
-          speciesConnection {
-            species {
-              name
-              classification
-              homeworld {
-                name
-              }
-            }
-          }
-        }
-      }
-    }`
-    return queryGql
+import http from 'k6/http';
+
+export const options = {
+  vus: 10,
+  duration: '5s',
+};
+
+export default function() {
+
+let test= http.get('https://pegipegi.com')
 }

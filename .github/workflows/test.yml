@@ -18,14 +18,11 @@ on:
         required: false
         default: ''
         type: string
-    secrets:
-      extra_cli_args_secret:
-        required: false
 
 jobs:
   k6_load_test:
     name: k6 Load Test
-    runs-on: ["self-hosted", "test-automation"]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -35,4 +32,4 @@ jobs:
         uses: grafana/k6-action@v0.2.0
         with:
           filename: script/${{ inputs.scenario_file }}
-          flags: --duration=${{ inputs.duration }}m --vus=${{ inputs.vus }} --out influxdb=http://influxdb.k6.svc.cluster.local:8086/k6db ${{ secrets.extra_cli_args_secret }} ${{ inputs.extra_cli_args }}
+          flags: --duration=${{ inputs.duration }}m --vus=${{ inputs.vus }} 
